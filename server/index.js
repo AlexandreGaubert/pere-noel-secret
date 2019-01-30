@@ -6,45 +6,44 @@ var express = require('express')
 var http = require('http').Server(app);
 const path = require('path')
 
-const port = 8080;
+const port = 80;
 
-app.use( express.static( `${__dirname}/build` ) );
+mongoose.connect('mongodb://admin:781227xy@ds251332.mlab.com:51332/pere-noel-secret', {useNewUrlParser: true});
+
+app.use(express.static(path.resolve(__dirname, "../build")));
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-//Mongo connexion
-var mongoDB = 'mongodb://admin:781227xy@ds251332.mlab.com:51332/pere-noel-secret';
-mongoose.connect(mongoDB);
-mongoose.Promise = global.Promise;
-var db = mongoose.connection;
-
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 //MongoDB Models
 var Participant = require("./participantModel");
 
-app.get('/', (req, res)=>{
-  res.sendFile(path.join(__dirname, '/build/index.html'));
-})
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "build", "index.html"));
+});
 
-app.get("/getNames", function(req, res){
+app.get("/getNames", function(req, res) {
+  var names = [];
+
   Participant.find({}, function(err, participants) {
-    if (err) console.log(err);
-    var names = [];
+
     participants.map(participant => {
       if (participant.hasPicked != true)
         names.push(participant.name)
     })
+
     if (names.length === 0)
       return res.send(200, null)
     return res.send(200, names)
+
   })
+
 })
 
 app.post("/pick", function(req, res){
@@ -84,9 +83,6 @@ app.get('/UnePouleSurUnMur', function(req, res) {
   })
 })
 
-var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
-var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0'
- 
-http.listen(server_port, server_ip_address, function () {
-  console.log( "Listening on " + server_ip_address + ", port " + server_port )
+http.listen(port, function () {
+  console.log("listening on port " + port + '.');
 });
