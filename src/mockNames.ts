@@ -1,0 +1,22 @@
+export const mockNames = [
+    "Grace",
+    "Maryse",
+    "Clara",
+    "Hans",
+    "Gabrielle",
+    "Mattew",
+    "Hugo",
+    "Alex",
+    "Toussaint",
+    "Justinien",
+    "Theo",
+    "Myriam",
+    "Duncan",
+    "Evelina",
+    "Henry",
+    "Alan",
+    "Jordan",
+    "Amelie",
+    "Leo",
+    "Germain"
+]
