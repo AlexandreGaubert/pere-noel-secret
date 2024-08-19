@@ -7,3 +7,7 @@ pull_request_rules:
       label:
         toggle:
           - merge-queued
+queue_rules:
+  - name: default
+    allow_queue_branch_edit: true
+    batch_max_wait_time: 32 s
