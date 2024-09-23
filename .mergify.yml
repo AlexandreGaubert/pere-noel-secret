@@ -1,11 +1,9 @@
 extends: mergic
-
 pull_request_rules:
   - name: Automatic queue
     conditions: []
     actions:
       queue:
-      
   - name: Add a queue label when PR is queued
     description: Toggle the queue label when a pull request is (un)queued.
     conditions:
@@ -17,20 +15,17 @@ pull_request_rules:
 queue_rules:
   - name: default
     allow_queue_branch_edit: true
-    batch_max_wait_time: 32 s
+    batch_max_wait_time: 5 m
   - name: sqdqsd
-
 priority_rules:
   - name: hotfix
     priority: high
     conditions:
       - base = main
-
   - name: low
     priority: low
     conditions:
       - base = main
-
   - name: critical
     priority: 5000
     conditions:
