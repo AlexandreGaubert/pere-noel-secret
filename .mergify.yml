@@ -1,5 +1,6 @@
 extends: mergic
 pull_request_rules:
+  # blabla
   - name: Automatic queue
     conditions: []
     actions:
