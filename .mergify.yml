@@ -1,6 +1,5 @@
 extends: mergic
 pull_request_rules:
-  # blabla
   - name: Automatic queue
     conditions: []
     actions:
@@ -34,3 +33,4 @@ priority_rules:
     priority: 5000
     conditions:
       - base = main
+    allow_checks_interruption: false
